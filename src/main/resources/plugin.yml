@@ -1,0 +1,4 @@
+name: InventorySorter
+main: net.aruneko.inventorysorter.InventorySorter
+version: 1.0.0
+api-version: 1.13
