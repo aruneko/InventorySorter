@@ -13,7 +13,10 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
 
 class InventorySorterListeners(private val plugin: Plugin, private val server: Server) : Listener {
-    private fun hasInventory(block: Block) : Boolean {
+    private fun hasInventory(block: Block?) : Boolean {
+        if (block === null) {
+            return false
+        }
         return when(block.type) {
             Material.CHEST,
             Material.ENDER_CHEST,
@@ -37,7 +40,7 @@ class InventorySorterListeners(private val plugin: Plugin, private val server: S
 
     private fun sortInventory(inventory: Inventory) : Array<ItemStack> {
         val allItems = inventory.contents
-        val nonNullItems = allItems.filter { item -> item != null }
+        val nonNullItems = allItems.filterNotNull()
         val sortedItems = nonNullItems.sortedBy { it.type }
         val groupedItems = sortedItems.groupBy { it.type }.map {
             (_, items) -> when(items.first().maxStackSize) {
@@ -61,7 +64,7 @@ class InventorySorterListeners(private val plugin: Plugin, private val server: S
             return
         }
 
-        val inventoryBlock = event.clickedBlock.state as InventoryHolder
+        val inventoryBlock = event.clickedBlock?.state as InventoryHolder
         val inventory = inventoryBlock.inventory
         val sortedInventory = sortInventory(inventory)
         inventory.contents = sortedInventory
