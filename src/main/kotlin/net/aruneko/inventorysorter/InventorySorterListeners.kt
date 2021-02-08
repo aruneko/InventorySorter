@@ -24,7 +24,8 @@ class InventorySorterListeners(private val plugin: Plugin, private val server: S
             Material.SHULKER_BOX,
             Material.DISPENSER,
             Material.DROPPER,
-            Material.HOPPER -> true
+            Material.HOPPER,
+            Material.BARREL-> true
             else -> false
         }
     }
