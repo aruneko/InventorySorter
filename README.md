@@ -3,15 +3,15 @@
 インベントリを持つブロックの中身をソートしてくれるSpigotプラグインです。
 
 ## (動作|作成)環境 
-- Spigot 1.13.1
-- Java 11
-- Kotlin 1.2.71
+- Spigot 1.16.5
+- Java 1.8
+- Kotlin 1.4.30
 
 ## How To Build
 以下のコマンドを入力すると、build/libs/以下にjarファイルができあがります。
 
 ```bash
-$ ./gradlew shadowJar
+$ ./gradlew build
 ```
 
 ## 使い方
