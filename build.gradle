@@ -1,24 +1,9 @@
-buildscript {
-    ext.kotlin_version = '1.4.30'
-
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.30'
+    id 'org.jetbrains.kotlin.jvm' version "${kotlin_version}"
 }
 
 group 'net.aruneko'
-version '1.1.0'
-
-sourceCompatibility = 1.8
+version '1.2.0'
 
 repositories {
     mavenCentral()
@@ -27,26 +12,21 @@ repositories {
     }
 }
 
-ext {
-    mc_version = '1.16.5'
-}
-
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}"
     compileOnly "org.spigotmc:spigot-api:${mc_version}-R0.1-SNAPSHOT"
-    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "16"
     kotlinOptions.noStdlib = false
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "16"
 }
 
 jar {
     from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
