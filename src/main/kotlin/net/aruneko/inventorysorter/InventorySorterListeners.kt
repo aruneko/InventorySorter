@@ -33,9 +33,9 @@ class InventorySorterListeners(private val plugin: Plugin, private val server: S
     private fun restackItems(items: List<ItemStack>) : List<ItemStack> {
         val item = items.first()
         val maxStack = item.maxStackSize
-        val totalItems = items.map { it.amount }.sum()
-        val maxStackItems = List(totalItems / maxStack){ _ -> ItemStack(item.type, maxStack) }
-        val remainderItems = List(1){ _ -> ItemStack(item.type, totalItems % maxStack) }
+        val totalItems = items.sumOf { it.amount }
+        val maxStackItems = List(totalItems / maxStack){ ItemStack(item.type, maxStack) }
+        val remainderItems = List(1){ ItemStack(item.type, totalItems % maxStack) }
         return maxStackItems.plus(remainderItems)
     }
 
@@ -51,7 +51,7 @@ class InventorySorterListeners(private val plugin: Plugin, private val server: S
                 else -> restackItems(items)
             }
         }.flatten()
-        val nullItems = Array(allItems.size - groupedItems.size){ _ -> ItemStack(Material.AIR) }
+        val nullItems = Array(allItems.size - groupedItems.size){ ItemStack(Material.AIR) }
         return groupedItems.toTypedArray().plus(nullItems)
     }
 
